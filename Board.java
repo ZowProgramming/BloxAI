@@ -9,6 +9,7 @@ public class Board {
 
     public int score;
     public int lines;
+    public int LVL = 1;
 
 
 
@@ -110,7 +111,7 @@ public class Board {
         }
     }
 
-    public void userAction(String action){
+    public void userAction(String action, boolean isPaused){
         if(action == "LEFT"){
             moveLeft();
         }
@@ -120,7 +121,7 @@ public class Board {
         if(action == "DOWN"){
             updateFallingBlocks();
         }
-        if(action == "HARD_DROP"){
+        if(action == "HARD_DROP" && !isPaused){
             while(!updateFallingBlocks()){}
         }
         if(action == "CW"){
@@ -312,7 +313,7 @@ public class Board {
             
         }
         if(linesCleared != 0){
-            score += 50*linesCleared*linesCleared;
+            score += 50*linesCleared*linesCleared*LVL;
             lines += linesCleared;
         }
 
