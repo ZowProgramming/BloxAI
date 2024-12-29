@@ -1,6 +1,6 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class gameCanvas extends JPanel{
     final int FPS = 60;
@@ -116,25 +116,10 @@ public class gameCanvas extends JPanel{
 
                 }
                 else if(gameBoard.blocks[row][col] == 1){
-                    g.setColor(Color.BLUE);
-                }
-                else if(gameBoard.blocks[row][col] == 2){
                     g.setColor(Color.RED);
                 }
-                else if(gameBoard.blocks[row][col] == 3){
-                    g.setColor(Color.MAGENTA);
-                }
-                else if(gameBoard.blocks[row][col] == 4){
-                    g.setColor(Color.GREEN);
-                }
-                else if(gameBoard.blocks[row][col] == 5){
-                    g.setColor(Color.YELLOW);
-                }
-                else if(gameBoard.blocks[row][col] == 6){
-                    g.setColor(Color.PINK);
-                }
-                else if(gameBoard.blocks[row][col] == 7){
-                    g.setColor(Color.CYAN);
+                else if(gameBoard.blocks[row][col] == 2){
+                    g.setColor(Color.WHITE);
                 }
                 int blockX = GAME_X + BLOCK_SIZE * col;
                 int blockY = GAME_Y + BLOCK_SIZE * row;

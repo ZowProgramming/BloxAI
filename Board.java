@@ -43,10 +43,10 @@ public class Board {
             //J-piece
             case 1:
                 fallingBlocks = new int[3][3];
-                fallingBlocks[0][0] = 2;
-                fallingBlocks[1][0] = 2;
-                fallingBlocks[1][1] = 2;
-                fallingBlocks[1][2] = 2;
+                fallingBlocks[0][0] = 1;
+                fallingBlocks[1][0] = 1;
+                fallingBlocks[1][1] = 1;
+                fallingBlocks[1][2] = 1;
 
                 pieceX = 4;
                 pieceY = 0;
@@ -54,10 +54,10 @@ public class Board {
             //L-piece
             case 2:
                 fallingBlocks = new int[3][3];
-                fallingBlocks[0][2] = 3;
-                fallingBlocks[1][0] = 3;
-                fallingBlocks[1][1] = 3;
-                fallingBlocks[1][2] = 3;
+                fallingBlocks[0][2] = 1;
+                fallingBlocks[1][0] = 1;
+                fallingBlocks[1][1] = 1;
+                fallingBlocks[1][2] = 1;
 
                 pieceX = 4;
                 pieceY = 0;
@@ -65,10 +65,10 @@ public class Board {
             //Line-piece
             case 3:
                 fallingBlocks = new int[4][4];
-                fallingBlocks[1][0] = 4;
-                fallingBlocks[1][1] = 4;
-                fallingBlocks[1][2] = 4;
-                fallingBlocks[1][3] = 4;
+                fallingBlocks[1][0] = 1;
+                fallingBlocks[1][1] = 1;
+                fallingBlocks[1][2] = 1;
+                fallingBlocks[1][3] = 1;
 
                 pieceX = 3;
                 pieceY = 0;
@@ -76,10 +76,10 @@ public class Board {
             //S-piece
             case 4:
                 fallingBlocks = new int[3][3];
-                fallingBlocks[0][1] = 5;
-                fallingBlocks[0][2] = 5;
-                fallingBlocks[1][0] = 5;
-                fallingBlocks[1][1] = 5;
+                fallingBlocks[0][1] = 1;
+                fallingBlocks[0][2] = 1;
+                fallingBlocks[1][0] = 1;
+                fallingBlocks[1][1] = 1;
 
                 pieceX = 4;
                 pieceY = 0;
@@ -87,10 +87,10 @@ public class Board {
             //Z-piece
             case 5:
                 fallingBlocks = new int[3][3];
-                fallingBlocks[0][0] = 6;
-                fallingBlocks[0][1] = 6;
-                fallingBlocks[1][1] = 6;
-                fallingBlocks[1][2] = 6;
+                fallingBlocks[0][0] = 1;
+                fallingBlocks[0][1] = 1;
+                fallingBlocks[1][1] = 1;
+                fallingBlocks[1][2] = 1;
 
                 pieceX = 4;
                 pieceY = 0;
@@ -99,10 +99,10 @@ public class Board {
             //T-Piece
             default:             
                 fallingBlocks = new int[3][3];
-                fallingBlocks[0][0] = 7;
-                fallingBlocks[0][1] = 7;
-                fallingBlocks[0][2] = 7;
-                fallingBlocks[1][1] = 7;
+                fallingBlocks[0][0] = 1;
+                fallingBlocks[0][1] = 1;
+                fallingBlocks[0][2] = 1;
+                fallingBlocks[1][1] = 1;
 
                 pieceX = 4;
                 pieceY = 0;
@@ -250,7 +250,7 @@ public class Board {
             for(int row = 0; row < fallingBlocks.length; row ++){
                 for(int col = 0; col < fallingBlocks.length; col ++){
                     if(fallingBlocks[row][col] != 0){
-                        stableBlocks[pieceY + row][pieceX + col] = fallingBlocks[row][col];
+                        stableBlocks[pieceY + row][pieceX + col] = 2;
                     }
                 }
             }
