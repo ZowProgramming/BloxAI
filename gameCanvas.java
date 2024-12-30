@@ -1,10 +1,12 @@
+// Created by YoAn Zhao Dec 2024
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class gameCanvas extends JPanel{
     final int FPS = 60;
-    int LVL = 1;
+    //int LVL = 5;
 
     int count = 0;
 
@@ -44,7 +46,7 @@ public class gameCanvas extends JPanel{
         getActionMap().put("leftPressed", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameBoard.userAction("LEFT");
+                gameBoard.userAction("LEFT",Paused);
             }
         });
 
@@ -52,7 +54,7 @@ public class gameCanvas extends JPanel{
         getActionMap().put("rightPressed", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameBoard.userAction("RIGHT");
+                gameBoard.userAction("RIGHT",Paused);
             }
         });
 
@@ -60,7 +62,7 @@ public class gameCanvas extends JPanel{
         getActionMap().put("downPressed", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameBoard.userAction("DOWN");
+                gameBoard.userAction("DOWN",Paused);
             }
         });
 
@@ -68,7 +70,7 @@ public class gameCanvas extends JPanel{
         getActionMap().put("spacePressed", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameBoard.userAction("HARD_DROP");
+                gameBoard.userAction("HARD_DROP",Paused);
             }
         });
 
@@ -76,7 +78,7 @@ public class gameCanvas extends JPanel{
         getActionMap().put("zPressed", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameBoard.userAction("CCW");
+                gameBoard.userAction("CCW",Paused);
             }
         });
 
@@ -84,7 +86,7 @@ public class gameCanvas extends JPanel{
         getActionMap().put("cPressed", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameBoard.userAction("CW");
+                gameBoard.userAction("CW",Paused);
             }
         });
 
@@ -145,7 +147,7 @@ public class gameCanvas extends JPanel{
 
         g.drawString("SCORE: "+gameBoard.score,GAME_X,GAME_Y - 30);
         g.drawString("LINES: "+gameBoard.lines,GAME_X,GAME_Y - 20);
-        g.drawString("LEVEL: "+ LVL,GAME_X,GAME_Y - 10);
+        g.drawString("LEVEL: "+ gameBoard.LVL,GAME_X,GAME_Y - 10);
 
 
 
@@ -161,14 +163,14 @@ public class gameCanvas extends JPanel{
 
                 if(!Paused){
                     needNewBoard = false;
-                    int speedDivider = 60/LVL;
+                    int speedDivider = 60/gameBoard.LVL;
 
                     if(count % speedDivider == 0){
                         gameBoard.updateFallingBlocks();  
                     }
                     gameBoard.updateBoard();
-                    if(LVL < 60 && LVL > 0){
-                        LVL = (gameBoard.lines / 30) + 1;
+                    if(gameBoard.LVL < 60 && gameBoard.LVL > 0){
+                        gameBoard.LVL = (gameBoard.lines / 30) + 1;
                     }
 
                     if(gameBoard.gameOver()){
