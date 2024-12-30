@@ -340,5 +340,9 @@ public class Board {
         }
         System.out.println("- - - - - - - - - -");
     }
+
+    public int[][] getBoard(){
+        return blocks;
+    }
     
 }

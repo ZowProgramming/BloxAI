@@ -2,7 +2,7 @@
 
 import javax.swing.*;
 
-public class mainActivity {
+public class gameActivity {
     public static void main(String[] args) {
 
         int WINDOW_WIDTH = 600;
