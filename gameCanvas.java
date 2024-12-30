@@ -174,6 +174,7 @@ public class gameCanvas extends JPanel{
                     }
 
                     if(gameBoard.gameOver()){
+
                         Paused = true;
                     }
     

@@ -21,7 +21,7 @@ public class NNLayer {
         }
     }
 
-    public final void generateWeights(){
+    private void generateWeights(){
         if(previousLayer == null){
             System.out.println("Cannot Find Previous Layer");
             return;
@@ -38,7 +38,7 @@ public class NNLayer {
         return a + diff*Math.random();
     }
 
-    public void mutateWeights(){
+    private void mutateWeights(){
         for(Neuron neuron : neurons){
             for(int i = 0; i < previousLayer.neurons.length; i++) {
                 neuron.weights[i] *= randInRange(0.99,1.01);
@@ -46,16 +46,21 @@ public class NNLayer {
         }
     }
 
-    public final void generateBiases(){
+    private void generateBiases(){
         for(Neuron neuron : neurons){
             neuron.bias = 100*Math.random() - 50;
         }
     }
 
-    public void mutateBiases(){
+    private void mutateBiases(){
         for(Neuron neuron : neurons){
             neuron.bias *= randInRange(0.99,1.01);
         }
+    }
+
+    public void mutate(){
+        mutateBiases();
+        mutateWeights();
     }
     
 
