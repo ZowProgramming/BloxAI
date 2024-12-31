@@ -32,12 +32,7 @@ public class gameCanvas extends JPanel{
         getActionMap().put("escapePressed", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Paused){
-                    Paused = false;
-                }
-                else{
-                    Paused = true;
-                }
+                Paused = !Paused;
             }
         });
 
