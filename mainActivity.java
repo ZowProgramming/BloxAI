@@ -5,7 +5,7 @@ import javax.swing.*;
 public class mainActivity {
     public static void main(String[] args) {
 
-        int WINDOW_WIDTH = 600;
+        int WINDOW_WIDTH = 700;
         int WINDOW_HEIGHT = 800;
         JFrame frame = new JFrame("Game");
 
