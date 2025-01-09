@@ -2,6 +2,9 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class gameCanvas extends JPanel{
@@ -26,8 +29,14 @@ public class gameCanvas extends JPanel{
     final int SCORE_WEIGHT = 50;
     final int SURVIVAL_WEIGHT = 1;
 
-    int gen = 0;
-    int genome = 0;
+    final int GENERATION_SIZE = 100;
+    final int SELECTION_SIZE = 10;
+
+    int gen = 1;
+    int genome = 1;
+    int avgFitness = 0;
+
+    int readLine = 1;
 
     Board gameBoard = new Board();
     NeuralNetwork network = new NeuralNetwork(gameBoard);
@@ -39,6 +48,7 @@ public class gameCanvas extends JPanel{
     int action = 0;
 
     gameCanvas(){
+        clearFile("storedNetworks.csv");
         //KEYBINDS
 
         //Close Application when escape pressed
@@ -239,12 +249,42 @@ public class gameCanvas extends JPanel{
         g.setFont(font);
 
         g.drawString("GEN: " + gen + " GENOME: " + genome, 400,100);
+        g.drawString("AVG FITNESS: " + avgFitness, 400,120);
         
     }
 
-    public void updateGame(){
-        
+    public ArrayList<NeuralNetwork> fittest = new ArrayList<>();
 
+    private void addToFittest(NeuralNetwork newNetwork){
+        if(fittest.size() < SELECTION_SIZE){
+            fittest.add(newNetwork);
+            return;
+        }
+
+        fittest.sort((n1,n2) -> Integer.compare(n2.getFitness(),n2.getFitness()));
+
+        for(int i = 0; i < fittest.size(); i++){
+            if(newNetwork.getFitness() > fittest.get(i).getFitness()){
+                fittest.remove(i);
+                fittest.add(newNetwork);
+                return;
+            }
+        }
+        //System.out.println("NOT FIT ENOUGH!!");
+    }
+
+    private void clearFile(String filename){
+        try (FileWriter writer = new FileWriter(filename)) {
+            // Overwriting the file with empty content
+            writer.write("");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    int sumFitness = 0;
+
+    public void updateGame(){
         new Thread(() -> { 
             while(true){
                 if(needNewBoard){
@@ -252,16 +292,47 @@ public class gameCanvas extends JPanel{
                     count = 0;
                     Paused = false;
                 }
+
                 if(gameBoard.gameOver()){
-                    network.writeToFile("storedNetworks.csv");
-                    network = new NeuralNetwork(gameBoard);
+                    sumFitness += network.getFitness();
+                    avgFitness = sumFitness / genome;
+                    addToFittest(network);
+                    genome++;
+
+                    if(genome > GENERATION_SIZE){
+                        readLine += SELECTION_SIZE;
+                        gen++;
+                        genome = 1;
+                        sumFitness = 0;
+
+                        
+                        
+                        System.out.println("FITNESS: " + network.getFitness());
+                        for(NeuralNetwork NN : fittest){
+                            NN.writeToFile("storedNetworks.csv");
+                        }
+                        fittest = new ArrayList<>();
+                    }
+
+
+                    if(gen == 1){
+                        network = new NeuralNetwork(gameBoard);
+                    }
+                    else{
+                        int lineAdd = (genome - 1) / (GENERATION_SIZE / SELECTION_SIZE);
+                        int line = lineAdd + readLine - SELECTION_SIZE;
+                        //System.out.println("Line: " + line);
+                        network = new NeuralNetwork(gameBoard,"storedNetworks.csv",line);
+                        network.mutate();
+
+                    }
                     needNewBoard = true;
                 }
 
                 if(!Paused){
                     needNewBoard = false;
                     //int speedDivider = 60/gameBoard.LVL;
-                    int speedDivider = 5;
+                    int speedDivider = 2;
 
                     if(count % speedDivider == 0){
                         gameBoard.updateFallingBlocks();  
@@ -289,7 +360,7 @@ public class gameCanvas extends JPanel{
 
                     if(gameBoard.gameOver()){
                         network.setFitness(SCORE_WEIGHT*gameBoard.score + SURVIVAL_WEIGHT*count);
-                        System.out.println(network.getFitness());
+                        //System.out.println(network.getFitness());
                         Paused = true;
                     }
     
@@ -299,7 +370,7 @@ public class gameCanvas extends JPanel{
                     count++; 
                 }
                 try{
-                    Thread.sleep(1000 / FPS);
+                    Thread.sleep(500 / FPS);
                     //Thread.sleep(100);
                 }
                 catch(InterruptedException e) {
