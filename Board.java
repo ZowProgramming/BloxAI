@@ -1,9 +1,12 @@
+// Created by YoAn Zhao Dec 2024
+
 public class Board {
 
     public int blocks[][];
     public int pieceX;
     public int pieceY;
 
+    public int nextPiece[][];
     public int fallingBlocks[][];
     public int stableBlocks[][];
 
@@ -20,6 +23,8 @@ public class Board {
         score = 0;
         lines = 0;
         generateNewPiece();
+        fallingBlocks = nextPiece;
+        generateNewPiece();
     }
 
     public void generateNewPiece() {
@@ -31,11 +36,11 @@ public class Board {
         switch(pieceSelect) {
             //O-piece
             case 0:
-                fallingBlocks = new int[2][2];
-                fallingBlocks[0][0] = 1;
-                fallingBlocks[0][1] = 1;
-                fallingBlocks[1][0] = 1;
-                fallingBlocks[1][1] = 1;
+                nextPiece = new int[3][3];
+                nextPiece[0][0] = 1;
+                nextPiece[0][1] = 1;
+                nextPiece[1][0] = 1;
+                nextPiece[1][1] = 1;
 
                 pieceX = 5;
                 pieceY = 0;
@@ -43,55 +48,55 @@ public class Board {
                 
             //J-piece
             case 1:
-                fallingBlocks = new int[3][3];
-                fallingBlocks[0][0] = 2;
-                fallingBlocks[1][0] = 2;
-                fallingBlocks[1][1] = 2;
-                fallingBlocks[1][2] = 2;
+                nextPiece = new int[3][3];
+                nextPiece[0][0] = 2;
+                nextPiece[1][0] = 2;
+                nextPiece[1][1] = 2;
+                nextPiece[1][2] = 2;
 
                 pieceX = 4;
                 pieceY = 0;
                 break;
             //L-piece
             case 2:
-                fallingBlocks = new int[3][3];
-                fallingBlocks[0][2] = 3;
-                fallingBlocks[1][0] = 3;
-                fallingBlocks[1][1] = 3;
-                fallingBlocks[1][2] = 3;
+                nextPiece = new int[3][3];
+                nextPiece[0][2] = 3;
+                nextPiece[1][0] = 3;
+                nextPiece[1][1] = 3;
+                nextPiece[1][2] = 3;
 
                 pieceX = 4;
                 pieceY = 0;
                 break;
             //Line-piece
             case 3:
-                fallingBlocks = new int[4][4];
-                fallingBlocks[1][0] = 4;
-                fallingBlocks[1][1] = 4;
-                fallingBlocks[1][2] = 4;
-                fallingBlocks[1][3] = 4;
+                nextPiece = new int[4][4];
+                nextPiece[1][0] = 4;
+                nextPiece[1][1] = 4;
+                nextPiece[1][2] = 4;
+                nextPiece[1][3] = 4;
 
                 pieceX = 3;
                 pieceY = 0;
                 break;
             //S-piece
             case 4:
-                fallingBlocks = new int[3][3];
-                fallingBlocks[0][1] = 5;
-                fallingBlocks[0][2] = 5;
-                fallingBlocks[1][0] = 5;
-                fallingBlocks[1][1] = 5;
+                nextPiece = new int[3][3];
+                nextPiece[0][1] = 5;
+                nextPiece[0][2] = 5;
+                nextPiece[1][0] = 5;
+                nextPiece[1][1] = 5;
 
                 pieceX = 4;
                 pieceY = 0;
                 break;
             //Z-piece
             case 5:
-                fallingBlocks = new int[3][3];
-                fallingBlocks[0][0] = 6;
-                fallingBlocks[0][1] = 6;
-                fallingBlocks[1][1] = 6;
-                fallingBlocks[1][2] = 6;
+                nextPiece = new int[3][3];
+                nextPiece[0][0] = 6;
+                nextPiece[0][1] = 6;
+                nextPiece[1][1] = 6;
+                nextPiece[1][2] = 6;
 
                 pieceX = 4;
                 pieceY = 0;
@@ -99,11 +104,11 @@ public class Board {
 
             //T-Piece
             default:             
-                fallingBlocks = new int[3][3];
-                fallingBlocks[0][0] = 7;
-                fallingBlocks[0][1] = 7;
-                fallingBlocks[0][2] = 7;
-                fallingBlocks[1][1] = 7;
+                nextPiece = new int[3][3];
+                nextPiece[0][0] = 7;
+                nextPiece[0][1] = 7;
+                nextPiece[0][2] = 7;
+                nextPiece[1][1] = 7;
 
                 pieceX = 4;
                 pieceY = 0;
@@ -257,6 +262,7 @@ public class Board {
             }
 
             updateScore();
+            fallingBlocks = nextPiece;
             generateNewPiece();
             return true;
         }

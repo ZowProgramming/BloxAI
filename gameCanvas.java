@@ -1,3 +1,5 @@
+// Created by YoAn Zhao Dec 2024
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -30,12 +32,7 @@ public class gameCanvas extends JPanel{
         getActionMap().put("escapePressed", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Paused){
-                    Paused = false;
-                }
-                else{
-                    Paused = true;
-                }
+                Paused = !Paused;
             }
         });
 
@@ -107,7 +104,39 @@ public class gameCanvas extends JPanel{
         // Set the background color
         setBackground(Color.WHITE);
 
-        setSize(1000,1000);       
+        setSize(1000,1000);
+        
+        for(int row = 0; row < 4; row++){
+            for(int col = 0; col < 4; col++){
+                int pieceSize = gameBoard.nextPiece.length;
+                if(row >= pieceSize || col >= pieceSize || gameBoard.nextPiece[row][col] == 0){
+                    g.setColor(Color.BLACK);
+                }
+                else if(gameBoard.nextPiece[row][col] == 1){
+                    g.setColor(Color.BLUE);
+                }
+                else if(gameBoard.nextPiece[row][col] == 2){
+                    g.setColor(Color.RED);
+                }
+                else if(gameBoard.nextPiece[row][col] == 3){
+                    g.setColor(Color.MAGENTA);
+                }
+                else if(gameBoard.nextPiece[row][col] == 4){
+                    g.setColor(Color.GREEN);
+                }
+                else if(gameBoard.nextPiece[row][col] == 5){
+                    g.setColor(Color.YELLOW);
+                }
+                else if(gameBoard.nextPiece[row][col] == 6){
+                    g.setColor(Color.PINK);
+                }
+                else if(gameBoard.nextPiece[row][col] == 7){
+                    g.setColor(Color.CYAN);
+                }
+
+                g.fillRect(500 + BLOCK_SIZE * col, GAME_Y + BLOCK_SIZE * row, BLOCK_SIZE, BLOCK_SIZE);
+            }
+        }
 
         for(int row = 0; row < 20; row++){
             for(int col = 0; col < 10; col++){
@@ -144,13 +173,21 @@ public class gameCanvas extends JPanel{
             }
         }
         
-
+        //draw grid for main board
         g.setColor(Color.GRAY);
         for(int i = 0; i < 10; i++){
             g.drawLine(GAME_X + BLOCK_SIZE*i, GAME_Y, GAME_X + BLOCK_SIZE*i, GAME_Y + GAME_HEIGHT);
         }
         for(int i = 0; i < 20; i++){
             g.drawLine(GAME_X, GAME_Y + BLOCK_SIZE*i, GAME_X + GAME_WIDTH, GAME_Y + BLOCK_SIZE*i);
+        }
+
+        //draw grid for next piece
+        for(int i = 0; i < 5; i++){
+            g.drawLine(500 + BLOCK_SIZE*i, GAME_Y, 500 + BLOCK_SIZE*i, GAME_Y + 4*BLOCK_SIZE);
+        }
+        for(int i = 0; i < 5; i++){
+            g.drawLine(500, GAME_Y + BLOCK_SIZE*i, 500 + BLOCK_SIZE*4, GAME_Y + BLOCK_SIZE*i);
         }
         //draw the boundary lines for the game
 
