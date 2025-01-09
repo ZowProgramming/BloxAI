@@ -3,19 +3,29 @@ public class NNLayer {
     Neuron neurons[];
     NNLayer previousLayer;
 
+    final int WEIGHT_RANGE = 25;
+    final int BIAS_RANGE = 25;
+
     NNLayer(int size){
         neurons = new Neuron[size];
+        for(int i = 0; i < size; i++){
+            neurons[i] = new Neuron();
+        }
         previousLayer = null;
     }
 
     NNLayer(int size, NNLayer previous){
         neurons = new Neuron[size];
+        for(int i = 0; i < size; i++){
+            neurons[i] = new Neuron();
+        }
         previousLayer = previous;
         generateBiases();
         generateWeights();
+        calcNeurons();
     }
 
-    public void calcNeurons(){
+    final public void calcNeurons(){
         for(Neuron neuron : neurons) {
             neuron.calcNeuronValue(previousLayer);
         }
@@ -26,9 +36,10 @@ public class NNLayer {
             System.out.println("Cannot Find Previous Layer");
             return;
         }
-        for(Neuron neuron : neurons){
-            for(int i = 0; i < previousLayer.neurons.length; i++) {
-                neuron.weights[i] = 100*Math.random() - 50;
+        for (Neuron neuron : neurons) {
+            neuron.weights = new double[previousLayer.neurons.length];
+            for (int i = 0; i < previousLayer.neurons.length; i++) {
+                neuron.weights[i] = 2*WEIGHT_RANGE*Math.random() - WEIGHT_RANGE;
             }
         }
     }
@@ -47,8 +58,8 @@ public class NNLayer {
     }
 
     private void generateBiases(){
-        for(Neuron neuron : neurons){
-            neuron.bias = 100*Math.random() - 50;
+        for (Neuron neuron : neurons) {
+            neuron.bias = BIAS_RANGE*2*Math.random() - BIAS_RANGE;
         }
     }
 

@@ -13,8 +13,10 @@ public class Board {
     public int lines;
     public int LVL = 1;
 
+    final private int LINE_CAP = 150;
 
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     Board() {
         blocks = new int[20][10];
         stableBlocks = new int[20][10];
@@ -31,8 +33,7 @@ public class Board {
         //System.out.println("NUMBER: " + pieceSelect);
 
         switch(pieceSelect) {
-            //O-piece
-            case 0:
+            case 0 -> {
                 fallingBlocks = new int[2][2];
                 fallingBlocks[0][0] = 1;
                 fallingBlocks[0][1] = 1;
@@ -41,10 +42,8 @@ public class Board {
 
                 pieceX = 5;
                 pieceY = 0;
-                break;
-                
-            //J-piece
-            case 1:
+            }
+            case 1 -> {
                 fallingBlocks = new int[3][3];
                 fallingBlocks[0][0] = 1;
                 fallingBlocks[1][0] = 1;
@@ -53,9 +52,8 @@ public class Board {
 
                 pieceX = 4;
                 pieceY = 0;
-                break;
-            //L-piece
-            case 2:
+            }
+            case 2 -> {
                 fallingBlocks = new int[3][3];
                 fallingBlocks[0][2] = 1;
                 fallingBlocks[1][0] = 1;
@@ -64,9 +62,8 @@ public class Board {
 
                 pieceX = 4;
                 pieceY = 0;
-                break;
-            //Line-piece
-            case 3:
+            }
+            case 3 -> {
                 fallingBlocks = new int[4][4];
                 fallingBlocks[1][0] = 1;
                 fallingBlocks[1][1] = 1;
@@ -75,9 +72,8 @@ public class Board {
 
                 pieceX = 3;
                 pieceY = 0;
-                break;
-            //S-piece
-            case 4:
+            }
+            case 4 -> {
                 fallingBlocks = new int[3][3];
                 fallingBlocks[0][1] = 1;
                 fallingBlocks[0][2] = 1;
@@ -86,9 +82,8 @@ public class Board {
 
                 pieceX = 4;
                 pieceY = 0;
-                break;
-            //Z-piece
-            case 5:
+            }
+            case 5 -> {
                 fallingBlocks = new int[3][3];
                 fallingBlocks[0][0] = 1;
                 fallingBlocks[0][1] = 1;
@@ -97,10 +92,8 @@ public class Board {
 
                 pieceX = 4;
                 pieceY = 0;
-                break;
-
-            //T-Piece
-            default:             
+            }
+            default -> {             
                 fallingBlocks = new int[3][3];
                 fallingBlocks[0][0] = 1;
                 fallingBlocks[0][1] = 1;
@@ -109,10 +102,18 @@ public class Board {
 
                 pieceX = 4;
                 pieceY = 0;
-                break;
+            }
         }
-    }
+        //O-piece
+        //J-piece
+        //L-piece
+        //Line-piece
+        //S-piece
+        //Z-piece
+        //T-Piece
+            }
 
+    @SuppressWarnings("StringEquality")
     public void userAction(String action, boolean isPaused){
         if(action == "LEFT"){
             moveLeft();
@@ -289,6 +290,7 @@ public class Board {
         }
     }
 
+    @SuppressWarnings("ManualArrayToCollectionCopy")
     private void updateScore(){
         boolean rowFull = true;
         int linesCleared = 0;
@@ -322,6 +324,9 @@ public class Board {
     }
 
     public boolean gameOver(){
+        if(lines >= LINE_CAP){
+            return true;
+        }
         for(int i = 0; i < 10; i++){
             if(stableBlocks[0][i] != 0){
                 return true;

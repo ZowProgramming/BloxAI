@@ -3,6 +3,15 @@ public class Neuron {
     double weights[]; // weights for values of previous layer. i.e weights[n] is the coefficient neuronValue of neuron n of previous layer
     double bias;
 
+    Neuron(){
+        neuronValue = 0;
+    }
+    @SuppressWarnings("unused")
+    Neuron(NNLayer previousLayer){
+        neuronValue = 0;
+
+    }
+
     public void calcNeuronValue(NNLayer layer){
         double sum = 0;
 
